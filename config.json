@@ -1,0 +1,7 @@
+{
+    "secret": "PASTE SECRET HERE",
+    "refreshTokenSecret": "PASTE REFRESH TOKEN SECRET HERE",
+    "port": 3000,
+    "tokenLife": 900,
+    "refreshTokenLife": 86400
+}
