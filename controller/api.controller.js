@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const config = require('../config')
-const logger = require('npmlog');
+const logger = require('../logger').Logger
 const bcrypt = require('bcrypt');
 
 const db = require('../data/data');
@@ -44,7 +44,7 @@ function login(req, res) {
             "token": token,
             "refreshToken": refreshToken,
         }
-
+        logger.info('INFO', 'Token created succesfully');
         tokenList[refreshToken] = response
         res.status(200).json(response);
     } else {
@@ -58,7 +58,9 @@ function refreshToken(req, res) {
     const postData = req.body
 
     if (postData.username) {
+        logger.info('API', 'User ' + postData.username + ' requested a new token');
         if ((postData.refreshToken) && (postData.refreshToken in tokenList)) {
+            logger.info('API', 'Token exist for user ' + postData.username);
             const user = {
                 "username": postData.username
             }
@@ -69,13 +71,16 @@ function refreshToken(req, res) {
             // update the token in the list
             tokenList[postData.refreshToken].token = token
             res.status(200).json(response);
+
         } else {
             logger.info('API', 'Refresh token is not valid')
             res.status(404).send('Refresh token is not valid')
         }
     }
-    else
+    else {
+        logger.info('API', 'Username was not provided')
         return res.status(401).json({ "error": true, "message": 'Username is required' });
+    }
 }
 
 module.exports = {

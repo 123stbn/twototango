@@ -3,7 +3,7 @@ const fs = require('fs');
 const app = require('../app');
 const debug = require('debug')('twototango:server');
 const config = require('../config')
-const logger = require('npmlog');
+const logger = require('../logger').Logger
 
 const port = normalizePort(process.env.PORT || config.port);
 
@@ -45,11 +45,11 @@ function onError(error) {
 
   switch (error.code) {
     case 'EACCES':
-      logger.error('ON LOAD', bind + ' requires elevated privileges');
+      logger.error('WWW', bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      logger.error('ON LOAD',(bind + ' is already in use'));
+      logger.error('WWW', (bind + ' is already in use'));
       process.exit(1);
       break;
     default:
@@ -62,5 +62,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-    logger.info('INFO','Listening on ' + bind);
+  logger.info('WWW', 'Listening on ' + bind);
 }

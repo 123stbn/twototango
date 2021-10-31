@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const logger = require('npmlog');
+const logger = require('../logger').Logger
 
 const users = require('../controller/users.controller');
 
