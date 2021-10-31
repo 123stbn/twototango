@@ -14,8 +14,13 @@ function api(req, res) {
 
 function performLogin(user, password) {
     let foundUser = db.userDB.find((data) => user.toLowerCase() === data.username.toLowerCase());
-    logger.info('LOGIN', 'Found User ' + foundUser.username);
-    const authorized = bcrypt.compareSync(password, foundUser.password)
+    let authorized = false
+    if (foundUser) {
+        logger.info('LOGIN', 'Found User ' + foundUser.username);
+        authorized = bcrypt.compareSync(password, foundUser.password)
+    } else {
+        logger.info('API', 'User ' + user + ' was not found');
+    }
     return authorized;
 }
 
