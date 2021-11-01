@@ -6,7 +6,7 @@ const logger = createLogger({
     transports: [new transports.Console({})]
 });
 
-var Logger = (exports.Logger = {});
+let Logger = (exports.Logger = {});
 
 Logger.info = function (prefix, msg) {
     logger.info(prefix + ' | ' + msg)

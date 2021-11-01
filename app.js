@@ -6,8 +6,11 @@ const morgaLogger = require('morgan');
 const apiRouter = require('./routes/api')
 const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./docs/swagger.json');
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(morgaLogger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

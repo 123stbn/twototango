@@ -1,0 +1,247 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Two to Tango",
+      "description": "defaultDescription",
+      "version": "0.1"
+    },
+    "servers": [
+      {
+        "url": "https://localhost:3000"
+      }
+    ],
+    "paths": {
+      "/api/login": {
+        "post": {
+          "description": "Login mehod. Returns TOKEN and REFRESH TOKEN",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api_login_body"
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\r\n    \"username\": \"Stbn\",\r\n    \"password\": \"dummyPass\" \r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_200"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_401"
+                  }
+                }
+              }
+            }
+          },
+          "servers": [
+            {
+              "url": "https://localhost:3000"
+            }
+          ]
+        },
+        "servers": [
+          {
+            "url": "https://localhost:3000"
+          }
+        ]
+      },
+      "/api/token": {
+        "post": {
+          "description": "Provide your username and REFRESH TOKEN to get a new valid TOKEN",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api_token_body"
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\r\n    \r\n    \"refreshToken\": \"Paste your REFRESH TOKEN\"\r\n }"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_200_1"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized access.",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_401"
+                  }
+                }
+              }
+            }
+          },
+          "servers": [
+            {
+              "url": "https://localhost:3000"
+            }
+          ]
+        },
+        "servers": [
+          {
+            "url": "https://localhost:3000"
+          }
+        ]
+      },
+      "/users": {
+        "get": {
+          "description": "List OS system users",
+          "parameters": [
+            {
+              "name": "x-access-token",
+              "in": "header",
+              "required": false,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "type": "string"
+              },
+              "example": "Paste your TOKEN"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_200_2"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized access or JWT expired",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_401"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "No token provided",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_401"
+                  }
+                }
+              }
+            }
+          },
+          "servers": [
+            {
+              "url": "https://localhost:3000"
+            }
+          ]
+        },
+        "servers": [
+          {
+            "url": "https://localhost:3000"
+          }
+        ]
+      }
+    },
+    "components": {
+      "schemas": {
+        "api_login_body": {
+          "type": "object",
+          "properties": {
+            "password": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            },
+            "refreshToken": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_401": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "api_token_body": {
+          "type": "object",
+          "properties": {
+            "refreshToken": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_1": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_2": {
+          "type": "object",
+          "properties": {
+            "userList": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

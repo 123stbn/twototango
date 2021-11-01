@@ -4,7 +4,6 @@ const logger = require('../logger').Logger
 const bcrypt = require('bcrypt');
 
 const db = require('../data/data');
-const e = require('express');
 
 const tokenList = {}
 
@@ -40,7 +39,7 @@ function login(req, res) {
 
     if (authorized) {
         const user = {
-            "username": postData.username
+            "username": postData.username.toLowerCase()
         }
         const token = jwt.sign(user, config.secret, { expiresIn: config.tokenLife })
         const refreshToken = jwt.sign(user, config.refreshTokenSecret, { expiresIn: config.refreshTokenLife })
@@ -67,7 +66,7 @@ function refreshToken(req, res) {
         if ((postData.refreshToken) && (postData.refreshToken in tokenList)) {
             logger.info('API', 'Token exist for user ' + postData.username);
             const user = {
-                "username": postData.username
+                "username": postData.username.toLowerCase()
             }
             const token = jwt.sign(user, config.secret, { expiresIn: config.tokenLife })
             const response = {
@@ -79,7 +78,7 @@ function refreshToken(req, res) {
 
         } else {
             logger.info('API', 'Refresh token is not valid')
-            res.status(404).send('Refresh token is not valid')
+            res.status(401).json({ "error": true, "message": 'Refresh token is not valid' })
         }
     }
     else {
