@@ -30,3 +30,9 @@ There are three endpoints:
 >Param {"username": "USERNAME","refreshToken":"REFRESH_TOKEN"}
 - /users/ | While being logged in, you can call this endpoint
 >Add header: **x-access-token** with your TOKEN value
+
+## Additional documentation
+
+Documentation and examples on swagger
+
+https://localhost:3000/api-docs/
